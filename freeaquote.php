@@ -1,10 +1,10 @@
 <?php
 if(isset($_POST['email'])) {
- 
+
     // EDIT THE 2 LINES BELOW AS REQUIRED
-    $email_to = "contact@onum.com";
-    $email_subject = "Your email subject line";
- 
+    $email_to = "isfesciit@gmail.com";
+    $email_subject = "Get Free Quote";
+
     function died($error) {
         // your error code can go here
         echo "We are very sorry, but there were error(s) found with the form you submitted. ";
@@ -13,8 +13,8 @@ if(isset($_POST['email'])) {
         echo "Please go back and fix these errors.<br /><br />";
         die();
     }
- 
- 
+
+
     // validation expected data exists
     if(
         !isset($_POST['website']) ||
@@ -27,9 +27,9 @@ if(isset($_POST['email'])) {
         !isset($_POST['message'])) {
         died('We are sorry, but there appears to be a problem with the form you submitted.');
     }
- 
-     
- 
+
+
+
     $url = $_POST['website']; // required
     $company = $_POST['company']; // required
     $fname = $_POST['fname']; // required
@@ -45,16 +45,16 @@ if(isset($_POST['email'])) {
     $reason6 = $reason[5];
     $comments = $_POST['message']; // required
 
- 
+
     $error_message = "";
     $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
- 
+
   if(!preg_match($email_exp,$email_from)) {
     $error_message .= 'The Email Address you entered does not appear to be valid.<br />';
   }
- 
+
     $string_exp = "/^[A-Za-z .'-]+$/";
- 
+
   if(!preg_match($string_exp,$fname)) {
     $error_message .= 'The First Name you entered does not appear to be valid.<br />';
   }
@@ -62,25 +62,25 @@ if(isset($_POST['email'])) {
   if(!preg_match($string_exp,$lname)) {
     $error_message .= 'The last Name you entered does not appear to be valid.<br />';
   }
- 
+
   if(strlen($comments) < 2) {
     $error_message .= 'The Comments you entered do not appear to be valid.<br />';
   }
- 
+
   if(strlen($error_message) > 0) {
     died($error_message);
   }
- 
+
     $email_message = "Form details below.\n\n";
- 
-     
+
+
     function clean_string($string) {
       $bad = array("content-type","bcc:","to:","cc:","href");
       return str_replace($bad,"",$string);
     }
- 
-     
- 
+
+
+
     $email_message .= "URL: ".clean_string($url)."\n";
     $email_message .= "Company: ".clean_string($company)."\n";
     $email_message .= "First Name: ".clean_string($fname)."\n";
@@ -94,19 +94,19 @@ if(isset($_POST['email'])) {
     $email_message .= "               ".clean_string($reason5)."\n";
     $email_message .= "               ".clean_string($reason6)."\n";
     $email_message .= "Comments: ".clean_string($comments)."\n";
- 
+
 // create email headers
 $headers = 'From: '.$email_from."\r\n".
 'Reply-To: '.$email_from."\r\n" .
 'X-Mailer: PHP/' . phpversion();
-@mail($email_to, $email_subject, $email_message, $headers);  
+@mail($email_to, $email_subject, $email_message, $headers);
 ?>
- 
+
 <!-- include your own success html here -->
- 
+
 Thank you for contacting us. We will be in touch with you very soon.
- 
+
 <?php
- 
+
 }
 ?>
